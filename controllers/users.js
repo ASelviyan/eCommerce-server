@@ -1,4 +1,4 @@
-const db = require('../../models')
+const db = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const router = require('express').Router()
@@ -46,7 +46,7 @@ router.post('/register', async (req, res) => {
     res.json({ token })
   } catch (err) {
     console.warn(err)
-    // handle validationn errors
+    // handle validation errors
     if (err.name === 'ValidationError') {
       res.status(400).json({ msg: err.message })
     } else {

@@ -1,5 +1,4 @@
-const { default: mongoose } = require('mongoose')
-const mongooose = require('mongoose')
+const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema(
   {
@@ -14,6 +13,16 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    orders: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order',
+      },
+    ],
+    cart: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Cart',
     },
   },
   {
