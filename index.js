@@ -7,6 +7,7 @@ const cors = require('cors')
 // app config/middleware
 const app = express()
 const PORT = process.env.PORT || 8000
+app.options('*', cors())
 app.use(cors())
 app.use(express.json()) // json req.bodies
 
