@@ -109,4 +109,78 @@ router.get('/auth-locked', authLockedRoute, (req, res) => {
   res.json({ msg: 'welcome to the secret auth-locked route' })
 })
 
+// GET user data
+router.get('/:id', async (req, res) => {
+  const id = req.params.id
+
+  try {
+    const foundUser = await db.User.findById(id)
+      .populate({
+        path: 'orders',
+      })
+      .populate({
+        path: 'cart',
+      })
+
+    res.json(foundUser)
+  } catch (err) {
+    console.warn(err)
+  }
+})
+
+// PUT update user data
+router.put('/:id', async (req, res) => {
+  const id = req.params.id
+  try {
+    const foundUser = await db.User.findById(id)
+    if (req.body.name) {
+      foundUser.name = req.body.name
+    }
+    if (req.body.email) {
+      foundUser.email = req.body.email
+    }
+
+    if (req.body.password) {
+      // hash the user's pass
+      const password = req.body.password
+      const salts = 12
+      const hashedPassword = await bcrypt.hash(password, salts)
+      foundUser.password = hashedPassword
+    }
+
+    // jwt token for log in in
+    const payload = {
+      name: foundUser.name,
+      email: foundUser.email,
+      id: foundUser.id,
+      orders: foundUser.orders,
+      cart: foundUser.cart,
+    }
+    // sign the jwt and send it back
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: '1d',
+    })
+
+    await foundUser.save()
+    // res.json({ foundUser })
+    res.status(201).json({ token })
+  } catch (err) {
+    console.warn(err)
+    res
+      .status(500)
+      .json({ msg: 'Something went wrong with updating your account details' })
+  }
+})
+
+// DELETE user
+router.delete('/:id', async (req, res) => {
+  const id = req.params.id
+  try {
+    await db.User.findByIdAndDelete(id)
+    res.json({ msg: 'User deleted' })
+  } catch (err) {
+    console.warn(err)
+  }
+})
+
 module.exports = router
