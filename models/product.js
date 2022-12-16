@@ -29,6 +29,19 @@ const ProductSchema = new mongoose.Schema(
 			type: Boolean,
 			required: true,
 		},
+		skew: {
+			type: String,
+			required: true,
+		},
+		quantity: {
+			type: Number,
+		},
+		onsale: {
+			type: Boolean,
+		},
+		discount: {
+			type: Number,
+		},
 	},
 	{
 		timestamps: true,
