@@ -34,6 +34,8 @@ app.get("/", myMiddleware, (req, res) => {
 
 app.use("/users", require("./controllers/users"))
 app.use("/orders", require("./controllers/orders"))
+app.use("/cart", require("./controllers/cart"))
+app.use("/inventory", require("./controllers/inventory"))
 // listen on a port
 app.listen(PORT, () => {
 	console.log(`server running on ${PORT}`)

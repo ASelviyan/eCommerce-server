@@ -28,8 +28,12 @@ router.post("/register", async (req, res) => {
 			name: req.body.name,
 			email: req.body.email,
 			password: hashedPassword,
+			pastOrders: [],
 		})
 
+		const newCart = await db.Cart.create({})
+
+		newUser.cart = newCart
 		await newUser.save()
 
 		// sign the user in by sending a valid jwt back
@@ -153,7 +157,7 @@ router.put("/:id", async (req, res) => {
 			name: foundUser.name,
 			email: foundUser.email,
 			id: foundUser.id,
-			orders: foundUser.orders,
+			pastOrders: foundUser.orders,
 			cart: foundUser.cart,
 		}
 		// sign the jwt and send it back
@@ -178,23 +182,6 @@ router.delete("/:id", async (req, res) => {
 	try {
 		await db.User.findByIdAndDelete(id)
 		res.json({ msg: "User deleted" })
-	} catch (err) {
-		console.warn(err)
-	}
-})
-
-// PUT adjust items in cart
-router.put("/:id/cart", async (req, res) => {
-	const id = req.params.id
-	try {
-		// find the cart belonging to specific user
-		const foundCart = await db.Cart.find({ user: id })
-		// set the products in the cart equal to the req.body
-		foundCart.products = req.body
-		// save the cart
-		await foundCart.save()
-
-		res.json(foundCart)
 	} catch (err) {
 		console.warn(err)
 	}
