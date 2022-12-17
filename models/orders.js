@@ -29,11 +29,11 @@ const ShippingAddressSchema = new mongoose.Schema(
 
 const OrderSchema = new mongoose.Schema(
 	{
-		cart: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Cart",
-		},
-
+		products: [
+			{
+				type: String,
+			},
+		],
 		total: {
 			type: mongoose.Types.Decimal128,
 		},
