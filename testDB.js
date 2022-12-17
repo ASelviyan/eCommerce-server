@@ -57,7 +57,7 @@ const makeInv = async () => {
 
     // const newInv = await db.Inventory.create({})
     // const inv = await db.Inventory.find({})
-    // resizeBy.json(inv)
+    // res.json(inv)
   } catch (error) {
     console.warn(error)
   }
