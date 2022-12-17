@@ -1,4 +1,4 @@
-const db = require("./models")
+const db = require('./models')
 
 const products = [
 	{
@@ -194,96 +194,96 @@ const products = [
 	},
 ]
 
-const addProducts = async (products) => {
-	try {
-		const inventory = await db.Inventory.findOne({})
-		console.log(inventory)
-		// for (const item of products) {
-		//   const newProduct = await db.Product.create(item)
+const addProducts = async products => {
+  try {
+    const inventory = await db.Inventory.findOne({})
+    console.log(inventory)
+    // for (const item of products) {
+    //   const newProduct = await db.Product.create(item)
 
-		//   inventory.products.push(newProduct)
+    //   inventory.products.push(newProduct)
 
-		//   await inventory.save()
-		// }
+    //   await inventory.save()
+    // }
 
-		const newProduct = {
-			name: "zweihander 2",
-			category: "sword",
-			description: "Very large two-handed sword, around 60kg",
-			price: 69.99,
-			image: ["/assets/sword.jpg"],
-			preorder: false,
-			sku: "1an74kr",
-			quantity: 6,
-			onsale: false,
-			discount: 0,
-		}
+    const newProduct = {
+      name: 'zweihander 2',
+      category: 'sword',
+      description: 'Very large two-handed sword, around 60kg',
+      price: 69.99,
+      image: ['/assets/sword.jpg'],
+      preorder: false,
+      sku: '1an74kr',
+      quantity: 6,
+      onsale: false,
+      discount: 0,
+    }
 
-		inventory.items.push(newProduct)
+    inventory.items.push(newProduct)
 
-		await inventory.save()
-	} catch (err) {
-		console.warn(err)
-	}
+    await inventory.save()
+  } catch (err) {
+    console.warn(err)
+  }
 }
 
 const makeInv = async () => {
-	try {
-		const inv = new db.Inventory({
-			items: [],
-		})
-		await inv.save()
+  try {
+    const inv = new db.Inventory({
+      products: [],
+    })
+    await inv.save()
 
-		// const newInv = await db.Inventory.create({})
-		// const inv = await db.Inventory.find({})
-		// resizeBy.json(inv)
-	} catch (error) {
-		console.warn(error)
-	}
+    // const newInv = await db.Inventory.create({})
+    // const inv = await db.Inventory.find({})
+    // res.json(inv)
+  } catch (error) {
+    console.warn(error)
+  }
 }
 
 const createUser = async () => {
-	try {
-		const newCart = await db.Cart.create({})
-		const newUser = await db.User.create({
-			name: "Emily",
-			email: "em@em.com",
-			password: "123",
-			orders: [],
-		})
+  try {
+    const newCart = await db.Cart.create({})
+    const newUser = await db.User.create({
+      name: 'Emily',
+      email: 'em@em.com',
+      password: '123',
+      orders: [],
+    })
 
-		newUser.cart = newCart
-		newCart.user = newUser
-		await newCart.save()
-		await newUser.save()
-	} catch (err) {
-		console.warn(err)
-	}
+    newUser.cart = newCart
+    newCart.user = newUser
+    await newCart.save()
+    await newUser.save()
+  } catch (err) {
+    console.warn(err)
+  }
 }
 
 const addToCart = async () => {
-	try {
-		const foundUser = await db.User.findById("639d11ae9658accc3b0491d1")
-		const foundCart = await db.Cart.findOne({ user: foundUser })
+  try {
+    const foundUser = await db.User.findById('639d11ae9658accc3b0491d1')
+    const foundCart = await db.Cart.findOne({ user: foundUser })
 
-		const newSku = {
-			sku: "1an74kr",
-		}
+    const newSku = {
+      sku: '1an74kr',
+    }
 
-		foundCart.products.push(newSku)
+    foundCart.products.push(newSku)
 
-		await foundCart.save()
-		// await foundUser.save()
-	} catch (err) {
-		console.warn(err)
-	}
+    await foundCart.save()
+    // await foundUser.save()
+  } catch (err) {
+    console.warn(err)
+  }
 }
 
 const checkOut = async () => {
-	try {
-	} catch (err) {
-		console.warn(err)
-	}
+  try {
+  } catch (err) {
+    console.warn(err)
+  }
 }
 
 // makeInv()
