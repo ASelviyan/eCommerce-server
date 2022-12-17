@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
 		const newOrder = await db.Order.create(req.body)
 		const foundUser = await db.User.findById(userId)
 		newOrder.user = foundUser
-		foundUser.orders.push(newOrder)
+		foundUser.pastOrders.push(newOrder)
 
 		await newOrder.save()
 		await foundUser.save()
