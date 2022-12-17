@@ -19,6 +19,7 @@ router.post("/", async (req, res) => {
 	try {
 		const newOrder = await db.Order.create(req.body)
 		const foundUser = await db.User.findById(userId)
+
 		newOrder.user = foundUser
 		foundUser.pastOrders.push(newOrder)
 
@@ -31,4 +32,12 @@ router.post("/", async (req, res) => {
 	}
 })
 
+router.get("/:id", async (req, res) => {
+	try {
+		const foundOrder = db.Order.findById(req.params.id)
+		res.json(foundOrder)
+	} catch (error) {
+		console.warn(error)
+	}
+})
 module.exports = router
